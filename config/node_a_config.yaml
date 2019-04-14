@@ -1,0 +1,9 @@
+devices:
+  names: [imu]
+  imu:
+    type: serial
+    port: ~/dev/ttyIMU
+    topic_name: imu
+    publish_rate: 40
+    hardware_id: imu
+    diagnostic_period: 0.2

@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<launch>
+  <!-- Spawn an instance of devices_node -->
+  <node name="node_a" pkg="ros_node_configuration" type="devices_node" output="screen">
+    <!-- Upload the configuration of the node in its private namespace -->
+    <rosparam file="$(find ros_node_configuration)/config/node_a_config.yaml" command="load" />
+  </node>
+
+  <!-- Spawn an instance of devices_node -->
+  <node name="node_b" pkg="ros_node_configuration" type="devices_node" output="screen">
+    <!-- Upload the configuration of the node in its private namespace -->
+    <rosparam file="$(find ros_node_configuration)/config/node_b_config.yaml" command="load" />
+  </node>
+</launch>

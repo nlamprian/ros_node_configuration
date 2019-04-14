@@ -1,0 +1,16 @@
+devices:
+  names: [sonar_front, sonar_rear]
+  sonar_front:
+    type: serial
+    port: ~/dev/ttySonarFront
+    topic_name: sonar_front
+    publish_rate: 30
+    hardware_id: sonar_front
+    diagnostic_period: 0.2
+  sonar_rear:
+    type: serial
+    port: ~/dev/ttySonarRear
+    topic_name: sonar_rear
+    publish_rate: 30
+    hardware_id: sonar_rear
+    diagnostic_period: 0.2
