@@ -1,6 +1,7 @@
 #ifndef ROS_NODE_CONFIGURATION_DEVICE_UTILS_SERIAL_HANDLER_H
 #define ROS_NODE_CONFIGURATION_DEVICE_UTILS_SERIAL_HANDLER_H
 
+#include <atomic>
 #include <chrono>
 #include <condition_variable>
 #include <memory>
@@ -35,6 +36,7 @@ class SerialHandler {
   }
 
   ~SerialHandler() {
+    is_active_ = false;
     if (data_thread_.joinable()) data_thread_.join();
   }
 
@@ -84,7 +86,7 @@ class SerialHandler {
    * retrieves them.
    */
   void dataThread() {
-    while (ros::ok()) {
+    while (is_active_) {
       std::unique_lock<std::mutex> lock(data_mutex_);
       try {
         if (serial_->available()) {
@@ -99,12 +101,11 @@ class SerialHandler {
       }
       data_cv_.wait_for(lock, std::chrono::milliseconds(5));
     }
-    is_active_ = false;
   }
 
   std::shared_ptr<::serial::Serial> serial_;
 
-  bool is_active_;
+  std::atomic_bool is_active_;
 
   bool has_new_data_;
   std::string data_;

@@ -86,7 +86,7 @@ class SerialDevice : public Device {
       diagnostic_updater::DiagnosticStatusWrapper &status) {
     if (serial_handler_->isActive())
       status.summary(diagnostic_msgs::DiagnosticStatus::OK,
-                     "Serial handler is active");
+                     "Serial port is active");
     else
       status.summary(diagnostic_msgs::DiagnosticStatus::ERROR,
                      "Serial port is not active");
