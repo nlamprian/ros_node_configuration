@@ -16,6 +16,10 @@ find_package(catkin REQUIRED
 ###################################
 
 catkin_package(
+  INCLUDE_DIRS
+    include
+  LIBRARIES
+    ${PROJECT_NAME}_devices
   CATKIN_DEPENDS
     roscpp
     std_msgs
@@ -32,20 +36,29 @@ include_directories(
   ${catkin_INCLUDE_DIRS}
 )
 
-add_executable(devices_node src/devices_node.cpp)
-target_link_libraries(devices_node ${catkin_LIBRARIES})
+add_library(${PROJECT_NAME}_devices
+  src/device/serial_device.cpp
+)
+target_link_libraries(${PROJECT_NAME}_devices ${catkin_LIBRARIES})
 
+add_executable(${PROJECT_NAME}_devices_node src/devices_node.cpp)
+add_dependencies(${PROJECT_NAME}_devices_node ${PROJECT_NAME}_devices)
+target_link_libraries(${PROJECT_NAME}_devices_node ${PROJECT_NAME}_devices ${catkin_LIBRARIES})
+set_target_properties(${PROJECT_NAME}_devices_node PROPERTIES OUTPUT_NAME devices_node PREFIX "")
 
 #############
 ## Install ##
 #############
 
-install(TARGETS devices_node
+install(
+  TARGETS
+    ${PROJECT_NAME}_devices
+    ${PROJECT_NAME}_devices_node
   ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
   LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 
-install(DIRECTORY launch config
+install(DIRECTORY config include/${PROJECT_NAME} launch
   DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
 )

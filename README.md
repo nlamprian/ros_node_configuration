@@ -44,7 +44,7 @@ Install dependencies
 sudo apt install ros-${ROS_DISTRO}-serial
 ```
 
-Donwload the package, compile and source the workspace, and finally start the launch file
+Download the package, compile and source the workspace, and finally start the launch file
 
 ```bash
 roslaunch ros_node_configuration bringup.launch
